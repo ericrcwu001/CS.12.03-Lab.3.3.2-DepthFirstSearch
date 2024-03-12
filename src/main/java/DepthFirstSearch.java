@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class DepthFirstSearch {
@@ -46,39 +47,50 @@ public class DepthFirstSearch {
     public static int[] depthFirstSearch(int[][] graph) {
 
         // Create a stack.
+        Stack<Integer> s = new Stack<>();
 
         // Create an array called visited. This will keep track of which nodes we have visited.
+        ArrayList<Integer> visited = new ArrayList<>();
 
         // Create an array called path. This will keep track of the order of nodes that we visit.
+        ArrayList<Integer> path = new ArrayList<>();
 
         // Create an index for the path array.
+        int pathIdx = 0;
 
         // Push our starting node to the stack. We can begin our traversal from any valid node. Let's begin our traversal at node 0.
+        s.push(0);
 
         // Record the starting node as visited.
+        visited.add(0);
 
         // While our stack is not empty i.e. while we still have nodes to explore ...
+        while (!s.isEmpty()) {
 
             // Pop the node that we are currently visiting from the stack.
+            int t = s.pop();
 
             // Add the node that we are currently visiting to the path.
+            path.add(t);
 
             // Obtain an array of all neighbouring/adjacent nodes of the node that we are currently visiting.
+            int[] neighbours = graph[t];
 
             // For each neighbouring/adjacent node ...
+            for (int neighbour : neighbours) {
 
                 // If the neighbouring/adjacent node has not been visited ...
+                if (visited.contains(neighbour)) continue;
 
-                    // Record the neighbouring/adjacent node as visited.
+                // Record the neighbouring/adjacent node as visited.
+                visited.add(neighbour);
 
-                    // Push the neighbouring/adjacent node onto the stack.
-
-
-
-
+                // Push the neighbouring/adjacent node onto the stack.
+                s.push(neighbour);
+            }
+        }
         // Return the path.
-        return null;
-
+        return path.stream().mapToInt(i -> i).toArray();
     }
 
     // A private helper method that prints the path. Used for visualisation and debugging purposes.
